@@ -14,7 +14,7 @@ Throughout this course, I developed a deep understanding of full-stack web devel
 | **Project 1** | [Wiki](https://github.com/happyweijie/web50_archive/tree/main/wiki) | A Markdown-based encyclopedia entry manager. | Django, Python |
 | **Project 2** | [Commerce](https://github.com/happyweijie/web50_archive/tree/main/commerce) | An e-commerce auction site where users can bid, comment, and manage watchlists. | Django, SQL |
 | **Project 3** | [Mail](https://github.com/happyweijie/web50_archive/tree/main/mail) | A Single Page Application email client that interacts with an API. | JavaScript, Django |
-| **Project 4** | [Network](https://github.com/happyweijie/web50_archive/tree/main/project4) | A social network for posting, following users, and liking posts. | Django, JavaScript |
+| **Project 4** | [Network](https://github.com/happyweijie/web50_archive/tree/main/network) | A social network for posting, following users, and liking posts. | Django, JavaScript |
 
 ---
 
