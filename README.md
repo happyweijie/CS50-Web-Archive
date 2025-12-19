@@ -20,34 +20,6 @@ Throughout this course, I developed a deep understanding of full-stack web devel
 
 ## 🛠️ Skills & Tools Learned
 
-* **Languages:** Python, JavaScript, HTML, CSS, SQL
-* **Frameworks:** Django, React, Bootstrap.
-* **Concepts:** Object-Oriented Programming, API Design, Security (CSRF, XSS), Scalability, and Testing.
-* **Version Control:** Git & GitHub.
-
----
-## 🏁 How to Run These Projects
-
-Each project folder contains its own specific instructions, but the general workflow is:
-
-1. **Clone the repo:**
-   ```bash
-   git clone https://github.com/happyweijie/web50_archive
-   ```
-I understand. To ensure you get the exact Markdown syntax without any of it being interpreted or hidden, here is the code block.
-
-I’ve included the Project 5 and Author sections which are often the parts that get cut off in long responses:
-
-Markdown
-
-| Project | Name | Description | Key Tech |
-| :--- | :--- | :--- | :--- |
-| **Project 5** | [Capstone](./project5) | **[Your Project Title]**: [Brief one-sentence description]. | [Tech Stack] |
-
----
-
-## 🛠️ Skills & Tools Learned
-
 * **Languages:** Python, JavaScript, SQL, HTML, CSS.
 * **Frameworks:** Django, React, Bootstrap.
 * **Concepts:** Object-Oriented Programming, API Design, Security (CSRF, XSS), Scalability, and Testing.
