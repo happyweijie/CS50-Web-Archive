@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if redirect_to == "create" %}
+        New Entry
+    {% else %}
+        Edit Entry
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <form action="{% url redirect_to %}" method="post">
+        {% csrf_token %}
+        <input name="title" placeholder="Entry" style="width: 85%;" class="form-control mt-3 mb-3" value="{{ entry_title }}" required>
+        <textarea name="content" placeholder="Entry Content" style="width: 85%;" class="form-control mt-3 mb-3" rows="15" required>{{ entry_content }}</textarea>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+{% endblock %}

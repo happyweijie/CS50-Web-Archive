@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class="container-fluid py-4">
+        <form method="get" action="{% url 'results' %}">
+            <select name="category" class="form-control mb-3" autofocus>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.type }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+{% endblock %}

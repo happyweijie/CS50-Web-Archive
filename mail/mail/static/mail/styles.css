@@ -1,0 +1,17 @@
+textarea {
+    min-height: 400px;
+}
+
+.read {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+
+.unread {
+    cursor: pointer;
+    background-color: white;
+}
+
+.email-timestamp {
+    text-align: right;
+}

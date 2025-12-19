@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+        <ul class="list-group">
+            {% for auction in auctions %}
+                    <li class="list-group-item mb-3">
+                            {% if auction.image %}
+                                <a href="{% url 'listing' auction.id %}">
+                                    <img src="{{  auction.image  }}" height="150" alt="No image available" class="mb-1">
+                                </a>
+                            {% endif %} 
+
+
+                            <a href="{% url 'listing' auction.id %}">
+                                <h4>{{  auction.title  }}</h4>
+                            </a>
+                            <b>Price:</b> ${{ auction.price|floatformat:2 }}
+                            <p>Description: {{  auction.description  }}</p>
+
+                    </li>
+            {% empty %}
+                <li class="list-group-item mb-3">No Auctions</li>
+            {% endfor %}
+          </ul>
+{% endblock %}

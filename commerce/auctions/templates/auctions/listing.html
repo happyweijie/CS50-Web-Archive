@@ -1,0 +1,86 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <!-- Add/Remove from watchlist-->
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'watchlist' %}" class="mb-3 mt-4">
+            {% csrf_token %}
+            <input name="auction_id" value="{{ auction.id }}" type="hidden">
+            {% if item_in_watchlist %}
+                <input name="action" value="remove" type="hidden">
+                <button type="submit" class="btn btn-primary">Remove from Watchlist</button>
+            {% else %}
+                <input name="action" value="add" type="hidden">
+                <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+            {% endif %}
+        </form>
+    {% endif %}
+    
+    <h3>Listing: {{ auction.title }}</h3>
+    {% if auction.image %}
+        <img src="{{  auction.image  }}" height="300" alt="No image available" class="mb-1">
+    {% endif %}
+    <p>Description: {{ auction.description }}</p>
+    <h4>${{ auction.price|floatformat:2 }}</h4>
+    
+    <p>
+        {% if bid_count == 0 %}
+            No bids so far.
+        {% else %}
+            {{ bid_count }} bid(s) so far. The current bidding price is ${{ highest_bid.price|floatformat:2 }}.
+        {% endif %}
+    </p>
+    {% if auction.active and user.is_authenticated %}
+        <!-- Bid for listing -->
+        {% if user.id != auction.creator.id %}
+            <form action="{% url 'bid' %}" method="post">
+                {% csrf_token %}
+                <input name="auction_id" value="{{ auction.id }}" type="hidden">
+                <input name="bid" placeholder="Bid" class="form-control mb-3 mt-3" value="{{ price }}" type="number" min="{{ auction.price }}" max="10000.00" step="0.01" required>
+                <button type="submit" class="btn btn-primary">Place Bid</button>
+            </form>
+        {% endif %}
+        
+        <!-- Close auction -->
+        {% if auction.creator.id == request.user.id and bid_count > 0 %}
+            <form action="{% url 'close' %}" method="post" class="mb-3 mt-3">
+                {% csrf_token %}
+                <input name="auction_id" value="{{ auction.id }}" type="hidden">
+                <button type="submit" class="btn btn-danger">Close Auction</button>
+            </form>
+        {% endif%}
+    {% endif %}
+    
+    <div class="mb-3 mt-3">
+        <h4>Details</h4>
+        <ul>
+            <li>Listed by: <a href="{% url 'users' auction.creator.id %}">{{ auction.creator.username }}</a></li>
+            <li>Category: {{ auction.category.type }}</li>
+            <li>Created on {{ auction.publish_time }}</li>
+        </ul>
+    </div>
+    
+    <!-- Add comments -->
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'comment' %}" class="mb-3 mt-5">
+            {% csrf_token %}
+            <input name="auction_id" value="{{ auction.id }}" type="hidden">
+            <textarea name="comment" class="form-control" placeholder="Add a comment..." rows="3" required></textarea>
+            <button type="submit" class="btn btn-primary mt-2">Save</button>
+        </form>
+    {% endif %}
+    
+    <!-- View all comments -->
+    <h4>Comments</h4>
+    <ul class="list-group">
+        {% for comment in comments %}
+            <li class="list-group-item">
+                <a href="{% url 'users' comment.user.id %}">{{ comment.user }}</a>
+                <p>{{ comment.text }}</p>
+            </li>
+        {% empty %}
+            <li class="list-group-item mb-3">No Comments</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

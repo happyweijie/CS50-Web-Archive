@@ -1,0 +1,18 @@
+.timestamps {
+    color: grey;
+    font-size: 13px;
+}
+
+.like-button {
+    cursor: pointer;
+}
+
+.like-disabled {
+    cursor: pointer;
+    color: black;
+}
+
+.like-disabled:hover {
+    text-decoration: none;
+    color: black;
+}

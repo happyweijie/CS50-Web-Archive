@@ -1,0 +1,111 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if index %}
+        <h2 class="m-3">All Posts</h2>
+        {% if user.is_authenticated %}
+            <div id="new-post-view" class="border m-2 rounded">
+                <form action="{% url 'new_post' %}" method="post" class="m-3">
+                    <h4>New Post</h4>
+                    {% csrf_token %}
+                    <textarea name="content" rows="2" class="form form-control mb-2" required autofocus></textarea>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if profile_info %}
+        <div class="container mt-3 mb-1">
+            <div class="row no-gutters">
+                <div class="col-sm-2">
+                    <h2>{{ username }}</h2>
+                </div>
+                <div class="col">
+                    {% if user.is_authenticated and user.id != id %}
+                    <form method="post" action="{% url 'follow' %}" id="follow-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_id" value="{{ id }}">
+                        <button type="submit" id="follow-button" class="btn btn-primary">
+                            {% if not followed %}
+                                Follow
+                            {% else %}
+                                Unfollow
+                            {% endif %}
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p><b>{{ post_count }}</b> posts</p>
+                </div>
+                <div class="col-4">
+                    <p><b>{{ followers_count }}</b> followers</p>
+                </div>
+                <div class="col-4">
+                    <p><b>{{ following_count }}</b> following</p>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+    {% endif %}
+
+    {% if following_header %}
+        <h2 class="m-3">Following</h2>
+    {% endif %}
+    
+    <div id="posts-view">
+        {% for post in page_obj.object_list %}
+            <div class="border rounded mx-2 px-3 pt-2 pb-1 mb-2 post">
+                <div class="row">
+                    <div class="col-lg-11 mr-4">
+                        <h4><a href="{% url 'profile' post.poster.id %}">{{ post.poster.username }}</a></h4>
+                    </div>
+                    <div class="ml-3">
+                        {% if post.poster.id == request.user.id %}
+                            <button type="button" class="btn btn-outline-primary edit-button">Edit</button>
+                        {% endif %}
+                    </div>
+                </div>
+                <input type="hidden" class="post-id" value="{{ post.id }}"/>
+                <p id="post-content">{{ post.content }}</p>
+                <p class="timestamps mb-1">{{ post.timestamp }}</p>
+                {% if user.is_authenticated %}
+                    <p class="like-button">
+                        &#10084 <span class="likes-count">{{ post.likes_count }}</span>
+                    </p>
+                {% else %}
+                    <a class="like-disabled" href="{% url 'login' %}">
+                        <p>&#10084 {{ post.likes_count }}</p>
+                    </a>  
+                {% endif %}
+            </div>
+        {% empty %}
+            <div class="border rounded mx-2 px-3 pt-2 pb-1 mb-2">
+                <p class="m-2">No Posts</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if pagination %}
+        <nav aria-label="Paginator">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </a></li>    
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>New Listing</h2>
+    <form action="{% url route %}" method="post">
+        {% csrf_token %}
+        <input name="title" placeholder="Title" class="form-control mt-3 mb-3" value="{{ title }}" required>
+        <textarea name="description" placeholder="Description" class="form-control mt-3 mb-3" rows="5" required>{{ description }}</textarea>
+        <input name="price" placeholder="Price" class="form-control mt-3 mb-3" value="{{ price }}" type="number" min="0.01" max="10000.00" step="0.01" required>
+        <select name="category" class="form-control mt-3 mb-3">
+            {% for cat in categories %}
+                {% if chosen_category %}
+                    <option value="{{ cat.id }}" selected="selected">{{ cat.type }}</option>
+                {% else %}
+                    <option value="{{ cat.id }}">{{ cat.type }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input name="image" placeholder="Image Link (*Optional)" class="form-control mt-3 mb-3" value="{{ image }}">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+{% endblock %}

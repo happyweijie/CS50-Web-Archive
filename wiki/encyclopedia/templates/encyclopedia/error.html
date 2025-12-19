@@ -1,0 +1,14 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Error
+{% endblock%}
+
+{% block body %}
+    <h1>{{ error_message }}</h1>
+    <ul>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'create' %}">Create New Page</a></li>
+        <li><a href="{% url 'random_entry' %}">Random Page</a></li>
+    </ul>
+{% endblock %}
